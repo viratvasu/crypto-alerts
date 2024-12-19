@@ -1,5 +1,9 @@
 # Crypo alerts
 
+architecture
+
+![architecure_image](https://github.com/viratvasu/images/blob/main/websocket-architecture-svg.png)
+
 - Run locally
 ```
 -> Go to backend/ then run below command
