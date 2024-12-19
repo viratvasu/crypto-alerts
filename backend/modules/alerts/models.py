@@ -19,11 +19,11 @@ class CryptoAlert(Base):
     crypto_symbol = Column(String, index=True)
     price_threshold = Column(Float, nullable=False)  # Price threshold
     condition = Column(String) # above/below # TODO: can use enums here instead
-    last_alert_sent_at = Column(DateTime)
+    last_alert_sent_at = Column(DateTime(timezone=True))
     last_alert_sent_price = Column(Float)
     is_active = Column(Boolean, default=True)
-    created_at = Column(DateTime, default=func.now())
-    updated_at = Column(DateTime, onupdate=func.now())
+    created_at = Column(DateTime(timezone=True), default=func.now())
+    updated_at = Column(DateTime(timezone=True), onupdate=func.now())
 
 class CryptoAlertHistory(Base):
     __tablename__ = "crypto_alert_history"
@@ -31,9 +31,9 @@ class CryptoAlertHistory(Base):
     alert_id = Column(Integer, ForeignKey("crypto_alerts.id"))
     sent_price = Column(Float)
     notification_status = Column(String) # TODO: can use enums here instead
-    alert_received_at = Column(DateTime)
-    notification_sent_at = Column(DateTime)
+    alert_received_at = Column(DateTime(timezone=True))
+    notification_sent_at = Column(DateTime(timezone=True))
     is_active = Column(Boolean)
-    created_at = Column(DateTime)
+    created_at = Column(DateTime(timezone=True))
     
     
