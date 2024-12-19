@@ -13,8 +13,9 @@ def start_binance_ws():
         global crypto_prices
         data = json.loads(message)
         symbol = data.get("s")
-        price = float(data.get("c", 0))  # Current price in USD
-        crypto_prices[symbol] = price # update current price of crypto
+        if symbol:
+          price = float(data.get("c", 0))  # Current price in USD
+          crypto_prices[symbol] = price # update current price of crypto
 
     def on_open(ws):
         """subscribe to top crypto"""
