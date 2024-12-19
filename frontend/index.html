@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crypto Prices</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+        h1 {
+            margin-top: 20px;
+            color: #333;
+        }
+        #prices-container {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 20px;
+        }
+        .price-card {
+            background-color: #ffffff;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            padding: 15px;
+            margin: 10px;
+            width: 150px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            font-size: 1.1em;
+        }
+        .price-card h3 {
+            margin: 0;
+            font-size: 1.2em;
+            color: #333;
+        }
+        .price-card p {
+            margin: 5px 0;
+            font-size: 1.1em;
+            color: #444;
+        }
+    </style>
+</head>
+<body>
+    <h1>Live Cryptocurrency Prices</h1>
+    <div id="prices-container"></div>
+
+    <script>
+        const socket = new WebSocket("ws://127.0.0.1:8000/ws/prices");
+        const pricesContainer = document.getElementById("prices-container");
+
+        socket.onopen = () => {
+            console.log("WebSocket connection established");
+        };
+
+        socket.onmessage = (event) => {
+            // Parse the incoming message
+            const data = JSON.parse(event.data);
+            const cryptoPrices = data.crypto_prices;
+
+            // Clear the previous prices
+            pricesContainer.innerHTML = "";
+
+            // Render the latest prices
+            for (const [symbol, price] of Object.entries(cryptoPrices)) {
+                const card = document.createElement("div");
+                card.className = "price-card";
+                card.innerHTML = `
+                    <h3>${symbol}</h3>
+                    <p>$${price.toFixed(2)}</p>
+                `;
+                pricesContainer.appendChild(card);
+            }
+        };
+
+        socket.onclose = () => {
+            console.log("WebSocket connection closed");
+        };
+
+        socket.onerror = (error) => {
+            console.error("WebSocket error:", error);
+        };
+    </script>
+</body>
+</html>
