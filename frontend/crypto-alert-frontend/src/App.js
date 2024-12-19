@@ -118,53 +118,61 @@ function App() {
       </section>
 
       <section>
-        {userEmail ? (
+        {!userEmail ? (
+          // Case when email is not set
+          <div className="email-prompt-container">
+            <p>
+              Please <button onClick={updateEmail}>set your email</button> to
+              view and manage alerts.
+            </p>
+          </div>
+        ) : (
+          // Case when email is set, show alerts and create button
           <>
             <h2>Your Alerts</h2>
-            <button
-              onClick={() => {
-                setFormMode("create"); // Set to "create" mode
-                setAlertData({
-                  // Reset alert data for the form
-                  crypto_symbol: "",
-                  price_threshold: "",
-                  condition: "above",
-                });
-                setModalOpen(true); // Open the modal
-              }}
-              className="add-alert-btn"
-            >
-              Create Alert
-            </button>
+            <div className="alerts-and-button-container">
+              <button
+                onClick={() => {
+                  setFormMode("create"); // Set to "create" mode
+                  setAlertData({
+                    crypto_symbol: "DOGEUSDT", // Default symbol
+                    price_threshold: "",
+                    condition: "above", // Default condition
+                  });
+                  setModalOpen(true); // Open the modal to create a new alert
+                }}
+              >
+                Create Alert
+              </button>
 
-            <div className="alerts-container">
-              {alerts.map((alert) => (
-                <div className="alert-card" key={alert.alert_id}>
-                  <p>
-                    {alert.crypto_symbol} {alert.condition} $
-                    {alert.price_threshold}
-                  </p>
-                  <button
-                    onClick={() => {
-                      setFormMode("update"); // Set to "update" mode
-                      setAlertData(alert); // Pre-fill the form with alert data
-                      setModalOpen(true); // Open the modal
-                    }}
-                  >
-                    Edit
-                  </button>
-                  <button onClick={() => handleDeleteAlert(alert.id)}>
-                    Delete
-                  </button>
-                </div>
-              ))}
+              <div className="alerts-container">
+                {alerts.length === 0 ? (
+                  <p>No alerts set. Create an alert to get started!</p>
+                ) : (
+                  alerts.map((alert) => (
+                    <div className="alert-card" key={alert.alert_id}>
+                      <p>
+                        {alert.crypto_symbol} {alert.condition} $
+                        {alert.price_threshold}
+                      </p>
+                      <button
+                        onClick={() => {
+                          setFormMode("update"); // Set to "update" mode
+                          setAlertData(alert); // Pre-fill the form with existing alert data
+                          setModalOpen(true); // Open the modal to edit
+                        }}
+                      >
+                        Edit
+                      </button>
+                      <button onClick={() => handleDeleteAlert(alert.id)}>
+                        Delete
+                      </button>
+                    </div>
+                  ))
+                )}
+              </div>
             </div>
           </>
-        ) : (
-          <p className="email-prompt">
-            Please <button onClick={updateEmail}>set your email</button> to view
-            and manage alerts.
-          </p>
         )}
       </section>
 

@@ -160,3 +160,38 @@ form button[type="button"] {
 form button[type="button"]:hover {
   background-color: #c82333;
 }
+.email-prompt-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 300px; /* Adjust as needed */
+  text-align: center;
+  gap: 15px;
+}
+
+/* Container for alerts and add alert button */
+.alerts-and-button-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  height: 300px; /* Adjust as needed */
+  text-align: center;
+}
+
+/* Create Alert button styles for centering */
+button {
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+button:hover {
+  background-color: #0056b3;
+}
