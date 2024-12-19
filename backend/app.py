@@ -56,7 +56,7 @@ def create_alert(user_id: str, symbol: str, price_threshold: float, db: Session 
     db.commit()
     db.refresh(alert)
     return alert
-  
+   
 
 @app.get("/alerts/")
 def get_alerts(user_id: str = None, db: Session = Depends(get_db)):
