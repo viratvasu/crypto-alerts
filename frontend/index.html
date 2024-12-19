@@ -50,7 +50,7 @@
     <div id="prices-container"></div>
 
     <script>
-        const socket = new WebSocket("ws://127.0.0.1:8000/ws/prices");
+        const socket = new WebSocket("wss://sahitvasu.info/ws/prices");
         const pricesContainer = document.getElementById("prices-container");
 
         socket.onopen = () => {
