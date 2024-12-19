@@ -1,11 +1,12 @@
 import asyncio
 from fastapi import APIRouter,WebSocket
 from conf.cache import crypto_prices
+from utilities.mail import Emailservice
 
 crypto_router = APIRouter()
 
 @crypto_router.get("/prices")
-def get_prices():
+async def get_prices():
     """Endpoint to fetch current cryptocurrency prices in INR."""
     global crypto_prices
     return {"crypto_prices": crypto_prices}
@@ -20,5 +21,3 @@ async def websocket_endpoint(websocket: WebSocket):
             await asyncio.sleep(1)  # Push updates every second
     except Exception as e:
         print("WebSocket Error:", e)
-    finally:
-        await websocket.close()
