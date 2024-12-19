@@ -1,4 +1,5 @@
 from fastapi import FastAPI, WebSocket, HTTPException, Depends
+from fastapi.middleware.cors import CORSMiddleware
 import threading
 from conf.db_conf import init_db
 from modules.crypto.routes import crypto_router
@@ -7,6 +8,14 @@ from modules.crypto.services.binance import start_binance_ws
 
 # create main app
 app = FastAPI()
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # Allows all origins (need to configure for security reasons)
+    allow_credentials=True,
+    allow_methods=["*"],  # Allows all HTTP methods (GET, POST, etc.)
+    allow_headers=["*"],  # Allows all headers
+)
 
 # include remaining app routes
 app.include_router(crypto_router)
